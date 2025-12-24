@@ -82,8 +82,18 @@ mysteries/{mystery-id}/
 Contains metadata and structure:
 - Mystery title, author, difficulty
 - List of characters (id, name, role, location)
-- List of locations (id, name, connections)
-- List of clues (id, name, location, type)
+- List of locations (id, name, connections, mapPosition)
+- List of clues (id, name, location, type, hotspot)
+
+**Location mapPosition** (set via Map Editor):
+```json
+"mapPosition": { "x": 50, "y": 30, "width": 80, "height": 50 }
+```
+
+**Clue hotspot** (set via Clue Editor):
+```json
+"hotspot": { "x": 70, "y": 25, "width": 56, "height": 40 }
+```
 
 Does NOT contain the solution (that's in spoilers.md).
 
@@ -193,6 +203,15 @@ The **Save** button writes positions directly to the manifest file:
 
 Positions are also logged to the browser console for reference.
 
+### Hotspot Properties
+
+| Property | Range | Description |
+|----------|-------|-------------|
+| X | 0-100 | Horizontal position (% from left) |
+| Y | 0-100 | Vertical position (% from top) |
+| Width | 30-200 | Hotspot width in pixels |
+| Height | 20-150 | Hotspot height in pixels |
+
 ### Disabling Map Editor
 
 When finished, set `VITE_EDITABLE_MAP=false` in `client/.env` and restart Vite.
@@ -200,6 +219,8 @@ When finished, set `VITE_EDITABLE_MAP=false` in `client/.env` and restart Vite.
 ## Clue Editor Mode
 
 When creating a new mystery, you need to position the clue hotspots on each location's background image. The Clue Editor Mode provides a visual tool for this.
+
+**Note**: The game remains fully playable while in edit mode - you can talk to characters, navigate between locations, and collect clues while positioning them.
 
 ### Enabling Clue Editor
 
