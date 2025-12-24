@@ -3,8 +3,7 @@
   "type": "clue",
   "width": 600,
   "height": 400,
-  "prompt": "Hand-drawn diagram of dinner table. Names written at each seat position. Arrows showing who sat next to whom.",
-  "status": "draft",
+  "prompt": "Hand-drawn dinner party seating chart on thick opaque aged parchment paper. Names written in elegant cursive ink: 'Lady Margaret', 'James Hartley', 'Dr. Chen', 'Victoria Sterling', 'Detective Foster', 'Thomas Reed'. Rectangular table layout sketch. Vintage texture, heavy paper weight, defined edges, solid markings. High contrast.",
   "generatedAt": "2025-12-24T16:28:07.399Z",
   "generationModel": "gemini-3-pro-image-preview"
 }
