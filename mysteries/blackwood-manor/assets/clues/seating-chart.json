@@ -1,0 +1,8 @@
+{
+  "name": "Seating Chart",
+  "type": "clue",
+  "width": 600,
+  "height": 400,
+  "prompt": "Hand-drawn diagram of dinner table. Names written at each seat position. Arrows showing who sat next to whom.",
+  "status": "placeholder"
+}

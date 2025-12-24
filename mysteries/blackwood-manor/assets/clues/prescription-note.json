@@ -1,0 +1,8 @@
+{
+  "name": "Prescription Note",
+  "type": "clue",
+  "width": 600,
+  "height": 400,
+  "prompt": "Doctor prescription pad note. 'For medicinal purposes only' text. Dr. Chen signature. Dosage instructions.",
+  "status": "placeholder"
+}

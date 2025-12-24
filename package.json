@@ -10,9 +10,11 @@
     "build": "cd client && npm run build",
     "start": "cd server && npm start",
     "install:all": "npm install && cd server && npm install && cd ../client && npm install",
-    "test": "npm run test:server && npm run test:client",
+    "test": "npm run test:server && npm run test:client && npm run validate-assets",
     "test:server": "cd server && npm test",
-    "test:client": "cd client && npm test"
+    "test:client": "cd client && npm test",
+    "generate-placeholders": "node scripts/generate-placeholders.js",
+    "validate-assets": "node scripts/validate-assets.js"
   },
   "devDependencies": {
     "canvas": "^3.2.0",

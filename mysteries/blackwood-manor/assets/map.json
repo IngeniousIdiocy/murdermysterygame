@@ -1,0 +1,8 @@
+{
+  "name": "Manor Floor Plan",
+  "type": "map",
+  "width": 720,
+  "height": 900,
+  "prompt": "Aged parchment floor plan of Blackwood Manor showing room layout. Rooms: Foyer (center), Library (upper left), Study (upper right), Dining Room (lower right), Kitchen (far lower right), Garden (lower left). Elegant hand-drawn style with room labels.",
+  "status": "placeholder"
+}

@@ -4,6 +4,7 @@ import { join } from 'path';
 import config, { validateConfig } from './config.js';
 import mysteriesRouter from './routes/mysteries.js';
 import gameRouter from './routes/game.js';
+import assetsRouter from './routes/assets.js';
 
 // Validate configuration before starting
 if (!validateConfig()) {
@@ -33,20 +34,11 @@ if (config.server.nodeEnv === 'development') {
 app.use('/api/mysteries', mysteriesRouter);
 app.use('/api/game', gameRouter);
 
-// Serve mystery assets (images, etc.)
-// URL: /assets/{mysteryId}/{type}/{filename}
-// e.g., /assets/blackwood-manor/locations/foyer.png
-app.use('/assets', express.static(config.mysteries.path, {
-  maxAge: '1d',
-  setHeaders: (res, path) => {
-    // Set proper content type for images
-    if (path.endsWith('.png')) {
-      res.setHeader('Content-Type', 'image/png');
-    } else if (path.endsWith('.jpg') || path.endsWith('.jpeg')) {
-      res.setHeader('Content-Type', 'image/jpeg');
-    }
-  },
-}));
+// Serve mystery assets with r_/ph_ resolver
+// URL: /assets/{mysteryId}/assets/{type}/{filename}
+// e.g., /assets/blackwood-manor/assets/locations/foyer.png
+// Checks for r_foyer.png (real) first, falls back to ph_foyer.png (placeholder)
+app.use('/assets', assetsRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {

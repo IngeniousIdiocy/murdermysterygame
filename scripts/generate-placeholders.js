@@ -1,35 +1,31 @@
 /**
  * Placeholder Image Generator
  *
- * Generates white placeholder images with descriptive text
- * Run with: node scripts/generate-placeholders.js
+ * Generates placeholder images from asset JSON metadata files.
+ * Run with: node scripts/generate-placeholders.js [mystery-id]
  *
  * IMAGE SPECIFICATIONS (Portrait Mobile):
  * - Location backgrounds: 720x1280 (9:16 portrait)
  * - Character portraits: 400x600 (2:3 portrait)
  * - Clue/evidence photos: 600x400 (3:2 landscape)
  * - Mystery thumbnail: 450x800 (9:16 portrait)
+ * - Map: 720x900
  */
 
 import { createCanvas } from 'canvas';
-import { writeFileSync, mkdirSync, existsSync } from 'fs';
-import { join, dirname } from 'path';
+import { writeFileSync, readdirSync, readFileSync, existsSync } from 'fs';
+import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const MYSTERY_PATH = join(__dirname, '../mysteries/blackwood-manor/assets');
+const MYSTERIES_PATH = join(__dirname, '../mysteries');
 
-// Image specifications (Portrait Mobile)
-const SPECS = {
-  location: { width: 720, height: 1280 },
-  character: { width: 400, height: 600 },
-  clue: { width: 600, height: 400 },
-  thumbnail: { width: 450, height: 800 },
-  map: { width: 720, height: 900 },
-};
-
-function createPlaceholder(width, height, text, filename) {
+/**
+ * Create a placeholder image from JSON metadata
+ */
+function createPlaceholder(metadata, outputPath) {
+  const { width, height, prompt, name } = metadata;
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
 
@@ -61,7 +57,7 @@ function createPlaceholder(width, height, text, filename) {
   ctx.textBaseline = 'middle';
 
   // Word wrap the text
-  const words = text.split(' ');
+  const words = prompt.split(' ');
   const lines = [];
   let currentLine = '';
 
@@ -96,22 +92,22 @@ function createPlaceholder(width, height, text, filename) {
     ctx.fillText(line, width / 2, y);
   });
 
-  // "PLACEHOLDER" watermark
+  // "PLACEHOLDER" watermark with asset name
   ctx.font = 'bold 14px Arial';
   ctx.fillStyle = '#999999';
-  ctx.fillText('PLACEHOLDER', width / 2, height - 20);
+  ctx.fillText(`PLACEHOLDER: ${name}`, width / 2, height - 20);
 
   // Save the image
   const buffer = canvas.toBuffer('image/png');
-  writeFileSync(filename, buffer);
-  console.log(`Created: ${filename}`);
+  writeFileSync(outputPath, buffer);
+  console.log(`  Created: ${outputPath}`);
 }
 
 /**
- * Create a floor plan map placeholder showing room layout
+ * Create a floor plan map placeholder (special case with room layout)
  */
-function createMapPlaceholder(filename) {
-  const { width, height } = SPECS.map;
+function createMapPlaceholder(metadata, outputPath) {
+  const { width, height } = metadata;
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
 
@@ -210,117 +206,134 @@ function createMapPlaceholder(filename) {
   // PLACEHOLDER watermark
   ctx.font = 'bold 14px Arial';
   ctx.fillStyle = '#999999';
-  ctx.fillText('PLACEHOLDER - MANOR FLOOR PLAN', width / 2, height - 20);
+  ctx.fillText('PLACEHOLDER: Manor Floor Plan', width / 2, height - 20);
 
   const buffer = canvas.toBuffer('image/png');
-  writeFileSync(filename, buffer);
-  console.log(`Created: ${filename}`);
+  writeFileSync(outputPath, buffer);
+  console.log(`  Created: ${outputPath}`);
 }
 
-// Ensure directories exist
-function ensureDir(dir) {
-  if (!existsSync(dir)) {
-    mkdirSync(dir, { recursive: true });
+/**
+ * Process all JSON files in a directory and generate placeholders
+ */
+function processDirectory(dirPath, type) {
+  if (!existsSync(dirPath)) {
+    console.log(`  Directory not found: ${dirPath}`);
+    return;
+  }
+
+  const files = readdirSync(dirPath).filter(f => f.endsWith('.json'));
+
+  for (const file of files) {
+    const jsonPath = join(dirPath, file);
+    const metadata = JSON.parse(readFileSync(jsonPath, 'utf-8'));
+    const id = basename(file, '.json');
+    const outputPath = join(dirPath, `ph_${id}.png`);
+
+    if (type === 'map') {
+      createMapPlaceholder(metadata, outputPath);
+    } else {
+      createPlaceholder(metadata, outputPath);
+    }
   }
 }
 
-// Location descriptions for placeholders
-const locations = {
-  'foyer': 'Grand entrance hall with marble floors, sweeping staircase, crystal chandelier, and dark wood paneling. Evening lighting with shadows. 1920s aristocratic English manor.',
-  'study': 'Crime scene. Dark wood-paneled study with large desk, leather chairs, bookshelves. Body outline on floor near desk. Brandy decanter visible. Fireplace. Evening lamplight.',
-  'library': 'Two-story library with rolling ladders, leather armchairs, reading lamps. Large windows with heavy drapes. 1920s English manor atmosphere.',
-  'dining-room': 'Formal dining room with long mahogany table set for dinner party. Candelabras, fine china, seating for 8. Crystal chandelier overhead.',
-  'kitchen': 'Large manor kitchen with copper pots, cast iron stove, preparation tables. Servants domain. Pantry door visible in background.',
-  'garden': 'Moonlit formal garden with hedgerows, stone pathways, garden benches. Manor house visible in background. Stone path shows muddy footprints.',
-};
-
-// Character descriptions for placeholders
-const characters = {
-  'detective-foster': 'Detective Sarah Foster - Professional woman in 1920s attire, notepad in hand. Keen intelligent eyes, practical short hair. Tweed jacket.',
-  'lady-margaret': 'Lady Margaret Blackwood - Elegant aristocratic woman, 50s, pearls, expensive black mourning dress. Dignified but with hint of hidden emotions.',
-  'james-hartley': 'James Hartley - Distinguished man, 40s, business suit, slightly nervous demeanor. Well-groomed but sweating slightly. Expensive watch.',
-  'dr-chen': 'Dr. Elizabeth Chen - Professional woman, 40s, doctor attire of 1920s era. Medical bag nearby. Composed, observant expression.',
-  'thomas-reed': 'Thomas Reed - Butler, 60s, formal butler attire, silver hair, dignified posture. Loyal, protective expression. White gloves.',
-  'victoria-sterling': 'Victoria Sterling - Young beautiful woman, 20s, artistic bohemian style dress. Red-rimmed eyes from crying. Paint-stained fingers.',
-};
-
-// Clue/evidence descriptions for placeholders
-const clues = {
-  'brandy-glass': 'Close-up of crystal brandy glass on desk. Amber liquid residue at bottom with slight white powder residue on rim. Fingerprints visible.',
-  'business-contract': 'Legal document on desk. "Partnership Dissolution Agreement" header visible. Signature lines, one signed, one blank. Red wax seal.',
-  'reading-glasses': 'Elegant ladies reading glasses with gold frames. One lens cracked. Lying on carpet near desk.',
-  'spilled-brandy': 'Dark stain on Persian rug. Dried brandy spill pattern. Small fragments of broken glass nearby.',
-  'financial-ledger': 'Open leather-bound ledger book. Columns of numbers. Red ink entries showing losses. Recent date visible.',
-  'love-letters': 'Bundle of handwritten letters tied with ribbon. Feminine handwriting. Partial text visible: "My dearest..." Pressed flower.',
-  'seating-chart': 'Hand-drawn diagram of dinner table. Names written at each seat position. Arrows showing who sat next to whom.',
-  'poison-bottle': 'Small brown medicine bottle in pantry. Skull and crossbones label partially torn. "Arsenic" text visible. Cork stopper.',
-  'prescription-note': 'Doctor prescription pad note. "For medicinal purposes only" text. Dr. Chen signature. Dosage instructions.',
-  'muddy-footprints': 'Muddy boot prints on stone path. Leading from garden gate toward manor. Size suggests male. Fresh mud.',
-};
-
-// Generate all placeholders
-async function main() {
-  console.log('Generating placeholder images...\n');
-  console.log('IMAGE SPECIFICATIONS (Portrait Mobile):');
-  console.log(`  Locations:  ${SPECS.location.width}x${SPECS.location.height}px (9:16)`);
-  console.log(`  Characters: ${SPECS.character.width}x${SPECS.character.height}px (2:3)`);
-  console.log(`  Clues:      ${SPECS.clue.width}x${SPECS.clue.height}px (3:2)`);
-  console.log(`  Thumbnail:  ${SPECS.thumbnail.width}x${SPECS.thumbnail.height}px (9:16)`);
-  console.log('');
-
-  // Ensure asset directories exist
-  ensureDir(join(MYSTERY_PATH, 'locations'));
-  ensureDir(join(MYSTERY_PATH, 'characters'));
-  ensureDir(join(MYSTERY_PATH, 'clues'));
-
-  // Generate location images
-  console.log('--- LOCATIONS ---');
-  for (const [id, description] of Object.entries(locations)) {
-    createPlaceholder(
-      SPECS.location.width,
-      SPECS.location.height,
-      description,
-      join(MYSTERY_PATH, 'locations', `${id}.png`)
-    );
+/**
+ * Process a single JSON file in the assets root
+ */
+function processSingleAsset(assetsPath, name, type) {
+  const jsonPath = join(assetsPath, `${name}.json`);
+  if (!existsSync(jsonPath)) {
+    console.log(`  Not found: ${jsonPath}`);
+    return;
   }
 
-  // Generate character images
+  const metadata = JSON.parse(readFileSync(jsonPath, 'utf-8'));
+  const outputPath = join(assetsPath, `ph_${name}.png`);
+
+  if (type === 'map') {
+    createMapPlaceholder(metadata, outputPath);
+  } else {
+    createPlaceholder(metadata, outputPath);
+  }
+}
+
+/**
+ * Generate all placeholders for a mystery
+ */
+function generateForMystery(mysteryId) {
+  const assetsPath = join(MYSTERIES_PATH, mysteryId, 'assets');
+
+  if (!existsSync(assetsPath)) {
+    console.error(`Mystery assets not found: ${assetsPath}`);
+    return false;
+  }
+
+  console.log(`\nGenerating placeholders for: ${mysteryId}`);
+  console.log('='.repeat(50));
+
+  // Process subdirectories
+  console.log('\n--- LOCATIONS ---');
+  processDirectory(join(assetsPath, 'locations'), 'location');
+
   console.log('\n--- CHARACTERS ---');
-  for (const [id, description] of Object.entries(characters)) {
-    createPlaceholder(
-      SPECS.character.width,
-      SPECS.character.height,
-      description,
-      join(MYSTERY_PATH, 'characters', `${id}.png`)
-    );
-  }
+  processDirectory(join(assetsPath, 'characters'), 'character');
 
-  // Generate clue images
   console.log('\n--- CLUES ---');
-  for (const [id, description] of Object.entries(clues)) {
-    createPlaceholder(
-      SPECS.clue.width,
-      SPECS.clue.height,
-      description,
-      join(MYSTERY_PATH, 'clues', `${id}.png`)
-    );
+  processDirectory(join(assetsPath, 'clues'), 'clue');
+
+  // Process root assets
+  console.log('\n--- THUMBNAIL ---');
+  processSingleAsset(assetsPath, 'thumbnail', 'thumbnail');
+
+  console.log('\n--- MAP ---');
+  processSingleAsset(assetsPath, 'map', 'map');
+
+  return true;
+}
+
+/**
+ * Main entry point
+ */
+async function main() {
+  const args = process.argv.slice(2);
+
+  console.log('Placeholder Image Generator');
+  console.log('===========================\n');
+  console.log('IMAGE SPECIFICATIONS:');
+  console.log('  Locations:  720x1280px (9:16 portrait)');
+  console.log('  Characters: 400x600px (2:3 portrait)');
+  console.log('  Clues:      600x400px (3:2 landscape)');
+  console.log('  Thumbnail:  450x800px (9:16 portrait)');
+  console.log('  Map:        720x900px');
+
+  if (args.length > 0) {
+    // Generate for specific mystery
+    const mysteryId = args[0];
+    if (generateForMystery(mysteryId)) {
+      console.log(`\n✓ Placeholders generated for ${mysteryId}!`);
+    }
+  } else {
+    // Generate for all mysteries
+    const entries = readdirSync(MYSTERIES_PATH, { withFileTypes: true });
+    let count = 0;
+
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        if (generateForMystery(entry.name)) {
+          count++;
+        }
+      }
+    }
+
+    console.log(`\n✓ Placeholders generated for ${count} mystery(s)!`);
   }
 
-  // Generate thumbnail
-  console.log('\n--- THUMBNAIL ---');
-  createPlaceholder(
-    SPECS.thumbnail.width,
-    SPECS.thumbnail.height,
-    'Murder at Blackwood Manor - Dark moody image of English manor at night, single lit window, fog, mysterious atmosphere.',
-    join(MYSTERY_PATH, 'thumbnail.png')
-  );
-
-  // Generate map
-  console.log('\n--- MAP ---');
-  createMapPlaceholder(join(MYSTERY_PATH, 'map.png'));
-
-  console.log('\n✓ All placeholders generated!');
-  console.log('\nTo replace with real art, drop PNG files at the same paths.');
+  console.log('\nTo replace with real art:');
+  console.log('  1. Create your image matching the specs in the JSON file');
+  console.log('  2. Save as r_<asset-id>.png in the same directory');
+  console.log('  3. Update status in JSON to "final"');
+  console.log('  4. Run npm run validate-assets to verify');
 }
 
 main().catch(console.error);

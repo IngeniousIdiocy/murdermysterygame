@@ -60,11 +60,20 @@ mysteries/{mystery-id}/
 │   └── {id}.md          # One file per location
 ├── clues/
 │   └── {id}.md          # One file per clue
-└── assets/              # Images (or use placeholders during development)
-    ├── thumbnail.png
+└── assets/              # Images with metadata
+    ├── thumbnail.json   # Metadata + generation prompt
+    ├── ph_thumbnail.png # Placeholder image
+    ├── r_thumbnail.png  # Real image (when available)
+    ├── map.json
+    ├── ph_map.png
     ├── characters/
+    │   ├── {id}.json    # Metadata per character
+    │   ├── ph_{id}.png  # Placeholder
+    │   └── r_{id}.png   # Real (optional)
     ├── locations/
+    │   └── ...
     └── clues/
+        └── ...
 ```
 
 ## Key Files Explained
@@ -92,6 +101,63 @@ Each character's markdown is passed directly to the LLM as the system prompt. Mu
 - Any information that would let the LLM know the answer
 
 Characters should be written so they all seem potentially guilty.
+
+## Asset Pipeline
+
+The game uses a placeholder/real asset system for iterative development:
+
+### Naming Convention
+
+| Prefix | Meaning | Purpose |
+|--------|---------|---------|
+| `ph_` | Placeholder | Development/testing image with specs |
+| `r_` | Real | Final production artwork |
+
+The server automatically serves `r_` files when available, falling back to `ph_` files.
+
+### Asset JSON Metadata
+
+Each asset has a companion `.json` file with specs and generation prompt:
+
+```json
+{
+  "name": "Grand Foyer",
+  "type": "location",
+  "width": 720,
+  "height": 1280,
+  "prompt": "Grand entrance hall with marble floors, sweeping staircase...",
+  "status": "placeholder"
+}
+```
+
+The `prompt` field can be used for AI image generation tools.
+
+### Image Specifications
+
+| Type | Dimensions | Aspect Ratio | Use |
+|------|------------|--------------|-----|
+| Location | 720x1280 | 9:16 portrait | Scene backgrounds |
+| Character | 400x600 | 2:3 portrait | Character portraits |
+| Clue | 600x400 | 3:2 landscape | Evidence photos |
+| Thumbnail | 450x800 | 9:16 portrait | Mystery selection |
+| Map | 720x900 | 4:5 | Floor plan navigation |
+
+### Asset Commands
+
+```bash
+# Generate placeholder images from JSON metadata
+npm run generate-placeholders
+
+# Validate all assets (runs in npm test)
+npm run validate-assets
+```
+
+### Adding Real Assets
+
+1. Create your image matching the specs in the `.json` file
+2. Save as `r_{id}.png` in the same directory as the placeholder
+3. Update `status` in the JSON to `"final"`
+4. Run `npm run validate-assets` to verify dimensions
 
 ## How It Works
 

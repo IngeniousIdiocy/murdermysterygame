@@ -1,0 +1,8 @@
+{
+  "name": "Financial Ledger",
+  "type": "clue",
+  "width": 600,
+  "height": 400,
+  "prompt": "Open leather-bound ledger book. Columns of numbers. Red ink entries showing losses. Recent date visible.",
+  "status": "placeholder"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Business Contract",
+  "type": "clue",
+  "width": 600,
+  "height": 400,
+  "prompt": "Legal document on desk. 'Partnership Dissolution Agreement' header visible. Signature lines, one signed, one blank. Red wax seal.",
+  "status": "placeholder"
+}
