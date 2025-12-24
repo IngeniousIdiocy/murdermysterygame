@@ -3,7 +3,9 @@
   "type": "clue",
   "width": 600,
   "height": 400,
-  "prompt": "Hand-drawn dinner party seating chart on thick opaque aged parchment paper. Names written in elegant cursive ink: 'Lady Margaret', 'James Hartley', 'Dr. Chen', 'Victoria Sterling', 'Detective Foster', 'Thomas Reed'. Rectangular table layout sketch. Vintage texture, heavy paper weight, defined edges, solid markings. High contrast.",
-  "generatedAt": "2025-12-24T16:28:07.399Z",
-  "generationModel": "gemini-3-pro-image-preview"
+  "transparent": false,
+  "prompt": "Full visible document: 'Dinner Party Seating Chart' on textured cream paper. Title visible at top. Central diagram of a rectangular dining table with place settings. Handwritten cursive names at seats. Chaotic alterations: 'James Hartley' crossed out at head of table, rewritten near exit. Arrows indicating a swap between 'Dr. Chen' and 'Victoria Sterling'. Ink smudges, tea stains. Vintage 1920s style.",
+  "generatedAt": "2025-12-24T21:14:49.979Z",
+  "generationModel": "gemini-3-pro-image-preview",
+  "status": "draft"
 }

@@ -83,9 +83,9 @@ export async function generate(mysteryId, options = {}) {
                 continue;
             }
 
-            // Determine if transparency is needed (Clues and Characters)
-            // Or if user explicitly requested maybe? For now, logic: Clue/Character = Transparent. Location/Map = Opaque.
-            const needsTransparency = asset.type === 'clue' || asset.type === 'character';
+            // Determine if transparency is needed
+            // Default: clues and characters need transparency, unless explicitly disabled in asset
+            const needsTransparency = (asset.type === 'clue' || asset.type === 'character') && asset.transparent !== false;
 
             // Retry Loop for Verification
             let attempts = 0;

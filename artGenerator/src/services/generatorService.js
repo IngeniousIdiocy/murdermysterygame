@@ -35,7 +35,7 @@ class GeminiProvider {
         let prompt = originalPrompt;
 
         if (options.transparent) {
-            prompt += ", isolated on a smooth solid dark gray background, high contrast, no shadows.";
+            prompt += ", isolated on a smooth solid bright neon green background (chroma key green), high contrast, no shadows.";
         }
 
         if (options.width && options.height) {
