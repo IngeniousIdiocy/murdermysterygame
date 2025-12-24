@@ -3,6 +3,8 @@
   "type": "character",
   "width": 400,
   "height": 600,
-  "prompt": "Detective Sarah Foster - Professional woman in 1920s attire, notepad in hand. Keen intelligent eyes, practical short hair. Tweed jacket.",
-  "status": "placeholder"
+  "prompt": "Detective Sarah Foster - Professional woman in 1920s attire, notepad in hand. Keen intelligent eyes, practical short hair. Tweed jacket. Full vibrant color portrait, 1920s cinematic lighting, highly detailed.",
+  "status": "draft",
+  "generatedAt": "2025-12-24T16:35:08.773Z",
+  "generationModel": "gemini-3-pro-image-preview"
 }

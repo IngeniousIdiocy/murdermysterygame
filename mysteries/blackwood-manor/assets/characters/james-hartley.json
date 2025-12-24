@@ -3,6 +3,8 @@
   "type": "character",
   "width": 400,
   "height": 600,
-  "prompt": "James Hartley - Distinguished man, 40s, business suit, slightly nervous demeanor. Well-groomed but sweating slightly. Expensive watch.",
-  "status": "placeholder"
+  "prompt": "James Hartley - Distinguished man, 40s, business suit, slightly nervous demeanor. Well-groomed but sweating slightly. Expensive watch. Full vibrant color portrait, 1920s cinematic lighting, highly detailed.",
+  "status": "draft",
+  "generatedAt": "2025-12-24T16:34:19.296Z",
+  "generationModel": "gemini-3-pro-image-preview"
 }

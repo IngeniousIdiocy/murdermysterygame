@@ -4,5 +4,7 @@
   "width": 720,
   "height": 1280,
   "prompt": "Grand entrance hall with marble floors, sweeping staircase, crystal chandelier, and dark wood paneling. Evening lighting with shadows. 1920s aristocratic English manor.",
-  "status": "placeholder"
+  "status": "draft",
+  "generatedAt": "2025-12-24T16:26:36.809Z",
+  "generationModel": "gemini-3-pro-image-preview"
 }

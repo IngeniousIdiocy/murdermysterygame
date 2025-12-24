@@ -3,6 +3,8 @@
   "type": "character",
   "width": 400,
   "height": 600,
-  "prompt": "Victoria Sterling - Young beautiful woman, 20s, artistic bohemian style dress. Red-rimmed eyes from crying. Paint-stained fingers.",
-  "status": "placeholder"
+  "prompt": "Victoria Sterling - Young beautiful woman, 20s, artistic bohemian style dress. Red-rimmed eyes from crying. Paint-stained fingers. Full vibrant color portrait, 1920s cinematic lighting, highly detailed.",
+  "status": "draft",
+  "generatedAt": "2025-12-24T16:33:04.421Z",
+  "generationModel": "gemini-3-pro-image-preview"
 }

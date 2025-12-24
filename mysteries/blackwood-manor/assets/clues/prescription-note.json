@@ -3,6 +3,8 @@
   "type": "clue",
   "width": 600,
   "height": 400,
-  "prompt": "Doctor prescription pad note. 'For medicinal purposes only' text. Dr. Chen signature. Dosage instructions.",
-  "status": "placeholder"
+  "prompt": "1920s doctor prescription pad note. Cursive handwriting. Text: 'For medicinal purposes only'. Signed 'Dr. Chen'. Vintage paper texture. No modern drugs. Period accurate medical document.",
+  "status": "draft",
+  "generatedAt": "2025-12-24T16:29:13.952Z",
+  "generationModel": "gemini-3-pro-image-preview"
 }

@@ -4,5 +4,7 @@
   "width": 600,
   "height": 400,
   "prompt": "Elegant ladies reading glasses with gold frames. One lens cracked. Lying on carpet near desk.",
-  "status": "placeholder"
+  "status": "draft",
+  "generatedAt": "2025-12-24T16:28:52.358Z",
+  "generationModel": "gemini-3-pro-image-preview"
 }

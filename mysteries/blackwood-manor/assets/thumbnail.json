@@ -4,5 +4,7 @@
   "width": 450,
   "height": 800,
   "prompt": "Murder at Blackwood Manor - Dark moody image of English manor at night, single lit window, fog, mysterious atmosphere.",
-  "status": "placeholder"
+  "status": "draft",
+  "generatedAt": "2025-12-24T16:24:21.734Z",
+  "generationModel": "gemini-3-pro-image-preview"
 }

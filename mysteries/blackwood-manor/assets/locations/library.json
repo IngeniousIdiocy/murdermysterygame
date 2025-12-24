@@ -4,5 +4,7 @@
   "width": 720,
   "height": 1280,
   "prompt": "Two-story library with rolling ladders, leather armchairs, reading lamps. Large windows with heavy drapes. 1920s English manor atmosphere.",
-  "status": "placeholder"
+  "status": "draft",
+  "generatedAt": "2025-12-24T16:25:30.289Z",
+  "generationModel": "gemini-3-pro-image-preview"
 }
