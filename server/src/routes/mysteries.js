@@ -70,4 +70,40 @@ router.put('/:id/map-positions', async (req, res) => {
   }
 });
 
+/**
+ * PUT /api/mysteries/:id/clue-positions
+ * Save clue positions to the manifest file (dev tool)
+ */
+router.put('/:id/clue-positions', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { cluePositions } = req.body; // Array of { id, hotspot }
+
+    if (!cluePositions || !Array.isArray(cluePositions)) {
+      return res.status(400).json({ error: 'cluePositions array required' });
+    }
+
+    // Read current manifest
+    const manifestPath = join(config.mysteries.path, id, 'manifest.json');
+    const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'));
+
+    // Update hotspot positions for each clue
+    for (const pos of cluePositions) {
+      const clue = manifest.clues.find((c) => c.id === pos.id);
+      if (clue) {
+        clue.hotspot = pos.hotspot;
+      }
+    }
+
+    // Write back to file
+    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+
+    console.log(`[CLUES] Saved ${cluePositions.length} clue positions for ${id}`);
+    res.json({ success: true, saved: cluePositions.length });
+  } catch (error) {
+    console.error('Error saving clue positions:', error);
+    res.status(500).json({ error: 'Failed to save clue positions' });
+  }
+});
+
 export default router;

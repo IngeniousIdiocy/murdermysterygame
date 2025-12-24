@@ -131,6 +131,16 @@ function gameReducer(state, action) {
         },
       };
 
+    case 'UPDATE_CLUES':
+      // Update clue data (used by clue editor)
+      return {
+        ...state,
+        mystery: {
+          ...state.mystery,
+          clues: action.payload,
+        },
+      };
+
     default:
       return state;
   }

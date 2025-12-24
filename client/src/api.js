@@ -45,6 +45,24 @@ export const api = {
   },
 
   /**
+   * Save clue positions to the manifest file (dev tool)
+   * @param {string} mysteryId
+   * @param {Array} cluePositions - Array of { id, hotspot: { x, y, width, height } }
+   */
+  async saveCluePositions(mysteryId, cluePositions) {
+    const response = await fetch(`${API_BASE}/api/mysteries/${mysteryId}/clue-positions`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cluePositions }),
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to save clue positions');
+    }
+    return response.json();
+  },
+
+  /**
    * Send a message to a character (interrogation)
    */
   async interrogate(mysteryId, characterId, message, conversationHistory) {

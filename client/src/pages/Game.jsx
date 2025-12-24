@@ -135,6 +135,8 @@ function Game() {
           discoveredClues={state.discoveredClues}
           onDiscoverClue={(clueId) => dispatch({ type: 'DISCOVER_CLUE', payload: clueId })}
           onTalkToCharacter={handleCharacterSelect}
+          allClues={state.mystery.clues}
+          onUpdateClues={(clues) => dispatch({ type: 'UPDATE_CLUES', payload: clues })}
         />
       </div>
 

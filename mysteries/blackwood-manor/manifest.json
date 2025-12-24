@@ -154,9 +154,10 @@
       "location": "study",
       "type": "evidence",
       "hotspot": {
-        "x": 70,
-        "y": 25,
-        "radius": 8
+        "x": 72,
+        "y": 49,
+        "width": 56,
+        "height": 40
       }
     },
     {
@@ -165,9 +166,10 @@
       "location": "study",
       "type": "evidence",
       "hotspot": {
-        "x": 35,
-        "y": 40,
-        "radius": 8
+        "x": 30,
+        "y": 52,
+        "width": 56,
+        "height": 40
       }
     },
     {
@@ -176,9 +178,10 @@
       "location": "study",
       "type": "evidence",
       "hotspot": {
-        "x": 25,
-        "y": 60,
-        "radius": 7
+        "x": 13,
+        "y": 85,
+        "width": 56,
+        "height": 40
       }
     },
     {
@@ -187,9 +190,10 @@
       "location": "study",
       "type": "evidence",
       "hotspot": {
-        "x": 65,
-        "y": 70,
-        "radius": 8
+        "x": 61,
+        "y": 82,
+        "width": 56,
+        "height": 40
       }
     },
     {
@@ -198,9 +202,10 @@
       "location": "library",
       "type": "evidence",
       "hotspot": {
-        "x": 25,
-        "y": 35,
-        "radius": 8
+        "x": 26,
+        "y": 20,
+        "width": 56,
+        "height": 40
       }
     },
     {
@@ -209,9 +214,10 @@
       "location": "library",
       "type": "evidence",
       "hotspot": {
-        "x": 70,
-        "y": 55,
-        "radius": 8
+        "x": 91,
+        "y": 72,
+        "width": 56,
+        "height": 40
       }
     },
     {
@@ -220,9 +226,10 @@
       "location": "dining-room",
       "type": "evidence",
       "hotspot": {
-        "x": 50,
-        "y": 30,
-        "radius": 9
+        "x": 13,
+        "y": 81,
+        "width": 56,
+        "height": 40
       }
     },
     {
@@ -231,9 +238,10 @@
       "location": "kitchen",
       "type": "evidence",
       "hotspot": {
-        "x": 75,
-        "y": 25,
-        "radius": 7
+        "x": 59,
+        "y": 17,
+        "width": 56,
+        "height": 40
       }
     },
     {
@@ -242,9 +250,10 @@
       "location": "kitchen",
       "type": "evidence",
       "hotspot": {
-        "x": 30,
-        "y": 50,
-        "radius": 8
+        "x": 67,
+        "y": 82,
+        "width": 56,
+        "height": 40
       }
     },
     {
@@ -253,9 +262,10 @@
       "location": "garden",
       "type": "evidence",
       "hotspot": {
-        "x": 50,
-        "y": 70,
-        "radius": 10
+        "x": 51,
+        "y": 72,
+        "width": 56,
+        "height": 40
       }
     }
   ]

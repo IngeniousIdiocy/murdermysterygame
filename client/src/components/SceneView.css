@@ -1,8 +1,135 @@
 .scene-view {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
   background: #000;
+}
+
+/* Clue Edit Mode Banner - overlays on top, doesn't shift content */
+.clue-edit-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 107, 53, 0.95);
+  color: #000;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  z-index: 20;
+}
+
+.clue-edit-banner .save-btn {
+  padding: 0.35rem 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.clue-edit-banner .save-btn.has-changes {
+  background: #2ecc40;
+  color: #000;
+  animation: pulse-save 1s ease-in-out infinite;
+}
+
+.clue-edit-banner .save-btn.saving {
+  background: #ffdc00;
+  color: #000;
+  animation: none;
+}
+
+.clue-edit-banner .save-btn.saved {
+  background: #0074d9;
+  color: #fff;
+}
+
+.clue-edit-banner .save-btn.error {
+  background: #ff4136;
+  color: #fff;
+}
+
+@keyframes pulse-save {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Clue Edit Controls Toolbar - overlays below banner */
+.clue-edit-controls {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+  z-index: 20;
+}
+
+.clue-edit-controls .edit-label {
+  font-size: 0.7rem;
+  color: var(--color-primary);
+  font-weight: bold;
+  margin-right: 0.25rem;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clue-edit-controls .edit-select {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg-light);
+  color: var(--color-text);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.clue-edit-controls .edit-btn {
+  min-width: 36px;
+  height: 32px;
+  padding: 0 0.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg-light);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clue-edit-controls .edit-btn:active {
+  background: var(--color-primary);
+  color: #000;
+}
+
+.clue-edit-controls .edit-value {
+  font-size: 0.9rem;
+  font-family: monospace;
+  color: var(--color-primary);
+  min-width: 40px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .scene-container {
@@ -13,6 +140,9 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .scene-background {
@@ -32,13 +162,12 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
   width: 56px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 5;
+  z-index: 15;
   padding: 4px;
   overflow: hidden;
 }
@@ -53,9 +182,9 @@
 }
 
 .clue-hotspot.undiscovered {
-  background: rgba(0, 0, 0, 0.6);
-  border: 2px solid rgba(201, 162, 39, 0.8);
-  box-shadow: 0 0 12px rgba(201, 162, 39, 0.5);
+  background: transparent;
+  border: 2px solid transparent;
+  box-shadow: none;
 }
 
 .clue-hotspot.undiscovered .clue-icon {
@@ -76,8 +205,8 @@
 }
 
 .clue-hotspot.discovered {
-  background: rgba(0, 0, 0, 0.5);
-  border: 2px solid rgba(64, 201, 96, 0.8);
+  background: transparent;
+  border: 2px solid transparent;
 }
 
 .clue-hotspot.discovered .clue-icon {
@@ -87,6 +216,43 @@
 
 .clue-hotspot.discovered:hover {
   transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Clue Edit Mode Hotspot Styles */
+.clue-hotspot.editable {
+  cursor: grab;
+  border: 2px dashed #fff;
+  background: rgba(255, 107, 53, 0.8);
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+  z-index: 50;
+}
+
+.clue-hotspot.editable:active,
+.clue-hotspot.dragging {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.1);
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.clue-hotspot.edit-selected {
+  border-color: #00ff00;
+  border-width: 3px;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+}
+
+.clue-hotspot .hotspot-coords {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  font-family: monospace;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  white-space: nowrap;
 }
 
 .hotspot-pulse {

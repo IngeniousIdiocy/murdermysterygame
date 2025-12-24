@@ -197,6 +197,53 @@ Positions are also logged to the browser console for reference.
 
 When finished, set `VITE_EDITABLE_MAP=false` in `client/.env` and restart Vite.
 
+## Clue Editor Mode
+
+When creating a new mystery, you need to position the clue hotspots on each location's background image. The Clue Editor Mode provides a visual tool for this.
+
+### Enabling Clue Editor
+
+Edit `client/.env`:
+
+```env
+VITE_EDITABLE_CLUES=true
+```
+
+Restart Vite after changing this setting.
+
+### Using the Editor
+
+1. Start the game and navigate to a location with clues
+2. You'll see an orange "CLUE EDIT" banner showing the current location and a **Save** button
+3. **Drag** clue hotspots to reposition them (X/Y as percentages of the scene)
+4. **Tap** a hotspot to select it (green glow)
+5. Use the **dropdown** to choose which property to edit: X, Y, Width, Height
+6. Use **−5, −1, +1, +5** buttons to adjust the selected property
+7. The clue image preview will resize to match width/height
+8. Click **Save** to write positions directly to `manifest.json`
+
+### Saving Positions
+
+The **Save** button writes positions directly to the manifest file:
+- **Green pulsing** = unsaved changes
+- **Yellow** = saving in progress
+- **Blue "Saved!"** = successfully saved
+
+**Important**: Save positions for each location before navigating away. Positions are saved per-location.
+
+### Hotspot Properties
+
+| Property | Range | Description |
+|----------|-------|-------------|
+| X | 0-100 | Horizontal position (% from left) |
+| Y | 0-100 | Vertical position (% from top) |
+| Width | 20-150 | Hotspot width in pixels |
+| Height | 20-150 | Hotspot height in pixels |
+
+### Disabling Clue Editor
+
+When finished, set `VITE_EDITABLE_CLUES=false` in `client/.env` and restart Vite.
+
 ## How It Works
 
 1. **Engine discovers mystery packs** by scanning the `mysteries/` folder
