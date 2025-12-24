@@ -5,15 +5,12 @@
   "author": "AI Generated",
   "version": "1.0",
   "difficulty": "medium",
-
   "settings": {
     "era": "1920s",
     "location": "English countryside mansion",
     "timeOfDay": "evening"
   },
-
   "startingLocation": "foyer",
-
   "characters": [
     {
       "id": "detective-foster",
@@ -64,116 +61,202 @@
       "isSuspect": true
     }
   ],
-
   "locations": [
     {
       "id": "foyer",
       "name": "Grand Foyer",
-      "connections": ["study", "library", "dining-room", "garden"],
-      "mapPosition": { "x": 50, "y": 45 }
+      "connections": [
+        "study",
+        "library",
+        "dining-room",
+        "garden"
+      ],
+      "mapPosition": {
+        "x": 46,
+        "y": 50,
+        "width": 30,
+        "height": 130
+      }
     },
     {
       "id": "study",
       "name": "The Study",
-      "connections": ["foyer", "library"],
-      "mapPosition": { "x": 75, "y": 25 }
+      "connections": [
+        "foyer",
+        "library"
+      ],
+      "mapPosition": {
+        "x": 30,
+        "y": 32,
+        "width": 55,
+        "height": 70
+      }
     },
     {
       "id": "library",
       "name": "The Library",
-      "connections": ["foyer", "study"],
-      "mapPosition": { "x": 25, "y": 25 }
+      "connections": [
+        "foyer",
+        "study"
+      ],
+      "mapPosition": {
+        "x": 30,
+        "y": 59,
+        "width": 55,
+        "height": 92
+      }
     },
     {
       "id": "dining-room",
       "name": "The Dining Room",
-      "connections": ["foyer", "kitchen"],
-      "mapPosition": { "x": 75, "y": 65 }
+      "connections": [
+        "foyer",
+        "kitchen"
+      ],
+      "mapPosition": {
+        "x": 61,
+        "y": 50,
+        "width": 55,
+        "height": 95
+      }
     },
     {
       "id": "kitchen",
       "name": "The Kitchen",
-      "connections": ["dining-room"],
-      "mapPosition": { "x": 75, "y": 85 }
+      "connections": [
+        "dining-room"
+      ],
+      "mapPosition": {
+        "x": 78,
+        "y": 47,
+        "width": 40,
+        "height": 50
+      }
     },
     {
       "id": "garden",
       "name": "The Garden",
-      "connections": ["foyer"],
-      "mapPosition": { "x": 25, "y": 75 }
+      "connections": [
+        "foyer"
+      ],
+      "mapPosition": {
+        "x": 46,
+        "y": 79,
+        "width": 155,
+        "height": 50
+      }
     }
   ],
-
   "clues": [
     {
       "id": "brandy-glass",
       "name": "Brandy Glass with Residue",
       "location": "study",
       "type": "evidence",
-      "hotspot": { "x": 70, "y": 25, "radius": 8 }
+      "hotspot": {
+        "x": 70,
+        "y": 25,
+        "radius": 8
+      }
     },
     {
       "id": "business-contract",
       "name": "Business Contract",
       "location": "study",
       "type": "evidence",
-      "hotspot": { "x": 35, "y": 40, "radius": 8 }
+      "hotspot": {
+        "x": 35,
+        "y": 40,
+        "radius": 8
+      }
     },
     {
       "id": "reading-glasses",
       "name": "Lady Margaret's Reading Glasses",
       "location": "study",
       "type": "evidence",
-      "hotspot": { "x": 25, "y": 60, "radius": 7 }
+      "hotspot": {
+        "x": 25,
+        "y": 60,
+        "radius": 7
+      }
     },
     {
       "id": "spilled-brandy",
       "name": "Dried Brandy Stain",
       "location": "study",
       "type": "evidence",
-      "hotspot": { "x": 65, "y": 70, "radius": 8 }
+      "hotspot": {
+        "x": 65,
+        "y": 70,
+        "radius": 8
+      }
     },
     {
       "id": "financial-ledger",
       "name": "Financial Ledger",
       "location": "library",
       "type": "evidence",
-      "hotspot": { "x": 25, "y": 35, "radius": 8 }
+      "hotspot": {
+        "x": 25,
+        "y": 35,
+        "radius": 8
+      }
     },
     {
       "id": "love-letters",
       "name": "Love Letters",
       "location": "library",
       "type": "evidence",
-      "hotspot": { "x": 70, "y": 55, "radius": 8 }
+      "hotspot": {
+        "x": 70,
+        "y": 55,
+        "radius": 8
+      }
     },
     {
       "id": "seating-chart",
       "name": "Seating Chart",
       "location": "dining-room",
       "type": "evidence",
-      "hotspot": { "x": 50, "y": 30, "radius": 9 }
+      "hotspot": {
+        "x": 50,
+        "y": 30,
+        "radius": 9
+      }
     },
     {
       "id": "poison-bottle",
       "name": "Poison Bottle",
       "location": "kitchen",
       "type": "evidence",
-      "hotspot": { "x": 75, "y": 25, "radius": 7 }
+      "hotspot": {
+        "x": 75,
+        "y": 25,
+        "radius": 7
+      }
     },
     {
       "id": "prescription-note",
       "name": "Prescription Note",
       "location": "kitchen",
       "type": "evidence",
-      "hotspot": { "x": 30, "y": 50, "radius": 8 }
+      "hotspot": {
+        "x": 30,
+        "y": 50,
+        "radius": 8
+      }
     },
     {
       "id": "muddy-footprints",
       "name": "Muddy Footprints",
       "location": "garden",
       "type": "evidence",
-      "hotspot": { "x": 50, "y": 70, "radius": 10 }
+      "hotspot": {
+        "x": 50,
+        "y": 70,
+        "radius": 10
+      }
     }
   ]
 }

@@ -121,6 +121,16 @@ function gameReducer(state, action) {
         ...action.payload,
       };
 
+    case 'UPDATE_LOCATIONS':
+      // Update location data (used by map editor)
+      return {
+        ...state,
+        mystery: {
+          ...state.mystery,
+          locations: action.payload,
+        },
+      };
+
     default:
       return state;
   }
@@ -143,10 +153,13 @@ export function GameProvider({ children }) {
   }, []);
 
   // Save state on changes (debounced)
+  // Note: We exclude 'mystery' from localStorage - it should always be loaded fresh from server
+  // This ensures any changes to manifest.json (like map positions) are picked up on reload
   useEffect(() => {
     if (state.mysteryId) {
       const timeout = setTimeout(() => {
-        localStorage.setItem(config.storage.gameState, JSON.stringify(state));
+        const { mystery, ...stateWithoutMystery } = state;
+        localStorage.setItem(config.storage.gameState, JSON.stringify(stateWithoutMystery));
       }, 500);
       return () => clearTimeout(timeout);
     }

@@ -181,6 +181,7 @@ function Game() {
           currentLocationId={state.currentLocation}
           onNavigate={handleNavigate}
           onClose={() => setShowNavigation(false)}
+          onUpdateLocations={(locations) => dispatch({ type: 'UPDATE_LOCATIONS', payload: locations })}
         />
       )}
 

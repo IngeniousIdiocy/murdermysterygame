@@ -2,6 +2,9 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import api from '../api';
 import './ChatPanel.css';
 
+// Cache-busting version - increment when assets change
+const ASSET_VERSION = Date.now();
+
 function ChatPanel({
   character,
   mysteryId,
@@ -11,6 +14,7 @@ function ChatPanel({
   onMessage,
   onClose,
 }) {
+  const characterImageUrl = `/assets/${mysteryId}/assets/characters/${character.id}.png?v=${ASSET_VERSION}`;
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [streamingText, setStreamingText] = useState('');
@@ -76,6 +80,12 @@ function ChatPanel({
   return (
     <div className="chat-overlay">
       <div className="chat-panel">
+        {/* Character portrait background */}
+        <div className="chat-background">
+          <img src={characterImageUrl} alt="" className="chat-background-image" />
+          <div className="chat-background-overlay" />
+        </div>
+
         <div className="chat-header">
           <div className="chat-character">
             <div className="chat-avatar">{character.name.charAt(0)}</div>

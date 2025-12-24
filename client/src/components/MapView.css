@@ -49,6 +49,10 @@
   width: 100%;
   aspect-ratio: 720 / 900;
   background: #f5f0e1;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  overflow: hidden;
 }
 
 .map-image {
@@ -57,23 +61,24 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  pointer-events: none;
 }
 
 /* Location hotspots on map */
 .map-hotspot {
   position: absolute;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.7);
-  border: 2px solid var(--color-border);
+  background: transparent;
+  border: 2px solid transparent;
   border-radius: var(--radius);
-  padding: 0.5rem 0.75rem;
+  padding: 0;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.2rem;
-  min-width: 80px;
 }
 
 .map-hotspot .hotspot-name {
@@ -81,6 +86,13 @@
   font-weight: bold;
   color: var(--color-text);
   white-space: nowrap;
+  text-align: center;
+}
+
+.map-hotspot.editable .hotspot-name {
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.2;
 }
 
 .map-hotspot .hotspot-badge {
@@ -92,33 +104,21 @@
 
 /* Current location */
 .map-hotspot.current {
-  background: rgba(201, 162, 39, 0.9);
+  background: rgba(201, 162, 39, 0.4);
   border-color: var(--color-primary);
   box-shadow: 0 0 15px rgba(201, 162, 39, 0.5);
 }
 
-.map-hotspot.current .hotspot-name {
-  color: #000;
-}
-
-.map-hotspot.current .hotspot-badge {
-  color: rgba(0, 0, 0, 0.7);
-}
-
 /* Adjacent (can move to) */
 .map-hotspot.adjacent {
-  background: rgba(64, 201, 96, 0.2);
+  background: rgba(64, 201, 96, 0.3);
   border-color: var(--color-success);
   animation: pulse-adjacent 2s ease-in-out infinite;
 }
 
 .map-hotspot.adjacent:active {
-  background: rgba(64, 201, 96, 0.4);
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-.map-hotspot.adjacent .hotspot-badge {
-  color: var(--color-success);
+  background: rgba(64, 201, 96, 0.5);
+  transform: translate(-50%, -50%) scale(1.02);
 }
 
 @keyframes pulse-adjacent {
@@ -132,14 +132,11 @@
 
 /* Disabled (not adjacent) */
 .map-hotspot.disabled {
-  background: rgba(0, 0, 0, 0.4);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: transparent;
+  border-color: transparent;
   cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.map-hotspot.disabled .hotspot-name {
-  color: var(--color-text-muted);
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Legend */
@@ -172,4 +169,155 @@
 
 .legend-item.adjacent .legend-dot {
   background: var(--color-success);
+}
+
+/* Edit Mode Styles */
+.map-edit-banner {
+  background: #ff6b35;
+  color: #000;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.map-edit-banner .map-close {
+  position: static;
+  width: 24px;
+  height: 24px;
+  font-size: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.map-edit-banner .save-btn {
+  padding: 0.35rem 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.map-edit-banner .save-btn.has-changes {
+  background: #2ecc40;
+  color: #000;
+  animation: pulse-save 1s ease-in-out infinite;
+}
+
+.map-edit-banner .save-btn.saving {
+  background: #ffdc00;
+  color: #000;
+  animation: none;
+}
+
+.map-edit-banner .save-btn.saved {
+  background: #0074d9;
+  color: #fff;
+}
+
+.map-edit-banner .save-btn.error {
+  background: #ff4136;
+  color: #fff;
+}
+
+@keyframes pulse-save {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.map-hotspot.editable {
+  cursor: grab;
+  border-style: dashed;
+  background: rgba(255, 107, 53, 0.8);
+  border-color: #fff;
+}
+
+.map-hotspot.editable:active,
+.map-hotspot.dragging {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.1);
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.map-hotspot .hotspot-coords {
+  font-size: 0.65rem;
+  font-family: monospace;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.15rem 0.3rem;
+  border-radius: 3px;
+  margin-top: 0.2rem;
+}
+
+.map-hotspot.selected {
+  border-color: #00ff00;
+  border-width: 3px;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+}
+
+/* Edit controls toolbar */
+.map-edit-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+
+.map-edit-controls .edit-label {
+  font-size: 0.7rem;
+  color: var(--color-primary);
+  font-weight: bold;
+  margin-right: 0.25rem;
+}
+
+.map-edit-controls .edit-select {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg-light);
+  color: var(--color-text);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.map-edit-controls .edit-btn {
+  min-width: 36px;
+  height: 32px;
+  padding: 0 0.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg-light);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-edit-controls .edit-btn:active {
+  background: var(--color-primary);
+  color: #000;
+}
+
+.map-edit-controls .edit-value {
+  font-size: 0.9rem;
+  font-family: monospace;
+  color: var(--color-primary);
+  min-width: 40px;
+  text-align: center;
+  font-weight: bold;
 }

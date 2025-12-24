@@ -27,6 +27,24 @@ export const api = {
   },
 
   /**
+   * Save map positions to the manifest file (dev tool)
+   * @param {string} mysteryId
+   * @param {Array} positions - Array of { id, mapPosition: { x, y, width, height } }
+   */
+  async saveMapPositions(mysteryId, positions) {
+    const response = await fetch(`${API_BASE}/api/mysteries/${mysteryId}/map-positions`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ positions }),
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to save map positions');
+    }
+    return response.json();
+  },
+
+  /**
    * Send a message to a character (interrogation)
    */
   async interrogate(mysteryId, characterId, message, conversationHistory) {

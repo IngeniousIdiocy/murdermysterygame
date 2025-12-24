@@ -20,8 +20,6 @@ router.get('/:mysteryId/assets/*', (req, res) => {
   const { mysteryId } = req.params;
   const assetPath = req.params[0]; // Everything after /assets/{mysteryId}/assets/
 
-  console.log(`[ASSET] Request: /assets/${mysteryId}/assets/${assetPath}`);
-
   if (!assetPath) {
     return res.status(400).json({ error: 'Asset path required' });
   }
@@ -38,14 +36,12 @@ router.get('/:mysteryId/assets/*', (req, res) => {
   // Check for real asset first (r_ prefix)
   const realPath = join(assetDir, `r_${id}${ext}`);
   if (existsSync(realPath)) {
-    console.log(`[ASSET] Serving REAL: ${realPath}`);
     return sendFile(res, realPath, ext);
   }
 
   // Fall back to placeholder (ph_ prefix)
   const placeholderPath = join(assetDir, `ph_${id}${ext}`);
   if (existsSync(placeholderPath)) {
-    console.log(`[ASSET] Serving PLACEHOLDER: ${placeholderPath}`);
     return sendFile(res, placeholderPath, ext);
   }
 

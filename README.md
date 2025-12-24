@@ -159,6 +159,44 @@ npm run validate-assets
 3. Update `status` in the JSON to `"final"`
 4. Run `npm run validate-assets` to verify dimensions
 
+## Map Editor Mode
+
+When creating a new mystery, you need to position the location hotspots on your map image. The Map Editor Mode provides a visual tool for this.
+
+### Enabling Map Editor
+
+Edit `client/.env`:
+
+```env
+VITE_EDITABLE_MAP=true
+```
+
+Restart Vite after changing this setting.
+
+### Using the Editor
+
+1. Start the game and open the map (tap MAP in the navigation bar)
+2. You'll see an orange "EDIT MODE" banner with a **Save** button
+3. **Drag** hotspots to reposition them (X/Y)
+4. **Tap** a hotspot to select it (green glow)
+5. Use the **dropdown** to choose which property to edit: X, Y, Width, Height
+6. Use **−5, −1, +1, +5** buttons to adjust the selected property
+7. Hotspot labels will wrap within the specified width/height
+8. Click **Save** to write positions directly to `manifest.json`
+
+### Saving Positions
+
+The **Save** button writes positions directly to the manifest file:
+- **Green pulsing** = unsaved changes
+- **Yellow** = saving in progress
+- **Blue "Saved!"** = successfully saved
+
+Positions are also logged to the browser console for reference.
+
+### Disabling Map Editor
+
+When finished, set `VITE_EDITABLE_MAP=false` in `client/.env` and restart Vite.
+
 ## How It Works
 
 1. **Engine discovers mystery packs** by scanning the `mysteries/` folder
