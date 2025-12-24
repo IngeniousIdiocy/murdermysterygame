@@ -1,0 +1,185 @@
+.notes-panel {
+  max-width: 800px;
+}
+
+.notes-panel h2 {
+  margin-bottom: 1.5rem;
+}
+
+.notes-section {
+  margin-bottom: 2rem;
+}
+
+.notes-section h3 {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Suspects grid */
+.suspects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.suspect-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  opacity: 0.6;
+}
+
+.suspect-card.talked {
+  opacity: 1;
+}
+
+.suspect-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-bg-lighter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.suspect-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.suspect-name {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.suspect-role {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* Clue list */
+.clue-list-summary {
+  list-style: none;
+}
+
+.clue-list-summary li {
+  padding: 0.75rem;
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clue-location {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* Interview logs */
+.interview-logs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.interview-log {
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.interview-log summary {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.interview-log summary:hover {
+  background: var(--color-bg-lighter);
+}
+
+.log-name {
+  font-weight: bold;
+}
+
+.log-count {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.log-content {
+  padding: 1rem;
+  border-top: 1px solid var(--color-border);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.log-message {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.log-message:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.log-speaker {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.log-message.user .log-speaker {
+  color: var(--color-primary);
+}
+
+.log-text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Progress stats */
+.progress-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
