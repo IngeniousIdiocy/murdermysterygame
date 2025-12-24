@@ -4,6 +4,9 @@ import { useGame } from '../context/GameContext';
 import api from '../api';
 import './Accusation.css';
 
+// Cache-busting version - increment when assets change
+const ASSET_VERSION = Date.now();
+
 function Accusation() {
   const { mysteryId } = useParams();
   const navigate = useNavigate();
@@ -123,7 +126,7 @@ function Accusation() {
                   />
                   <div className="suspect-portrait">
                     <img
-                      src={`/assets/${mysteryId}/assets/characters/${suspect.id}.png`}
+                      src={`/assets/${mysteryId}/assets/characters/${suspect.id}.png?v=${ASSET_VERSION}`}
                       alt={suspect.name}
                       onError={(e) => {
                         e.target.style.display = 'none';

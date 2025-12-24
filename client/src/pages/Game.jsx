@@ -9,6 +9,9 @@ import MapView from '../components/MapView';
 import Markdown from '../components/Markdown';
 import './Game.css';
 
+// Cache-busting version - increment when assets change
+const ASSET_VERSION = Date.now();
+
 function Game() {
   const { mysteryId } = useParams();
   const navigate = useNavigate();
@@ -95,7 +98,7 @@ function Game() {
           <div className="intro-modal">
             <div className="intro-header">
               <img
-                src={`/assets/${mysteryId}/assets/thumbnail.png`}
+                src={`/assets/${mysteryId}/assets/thumbnail.png?v=${ASSET_VERSION}`}
                 alt={state.mystery.title}
                 className="intro-thumbnail"
               />

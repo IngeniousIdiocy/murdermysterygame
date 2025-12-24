@@ -1,10 +1,13 @@
 import './MapView.css';
 
+// Cache-busting version - increment when assets change
+const ASSET_VERSION = Date.now();
+
 function MapView({ mysteryId, locations, currentLocationId, onNavigate, onClose }) {
   const currentLocation = locations.find((loc) => loc.id === currentLocationId);
   const adjacentIds = currentLocation?.connections || [];
 
-  const mapImageUrl = `/assets/${mysteryId}/assets/map.png`;
+  const mapImageUrl = `/assets/${mysteryId}/assets/map.png?v=${ASSET_VERSION}`;
 
   const handleLocationClick = (location) => {
     if (adjacentIds.includes(location.id)) {

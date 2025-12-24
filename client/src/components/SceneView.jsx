@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import './SceneView.css';
 
+// Cache-busting version - increment when assets change
+const ASSET_VERSION = Date.now();
+
 function SceneView({
   mysteryId,
   location,
@@ -13,7 +16,7 @@ function SceneView({
   const [hoveredClue, setHoveredClue] = useState(null);
   const [selectedClue, setSelectedClue] = useState(null);
 
-  const locationImageUrl = `/assets/${mysteryId}/assets/locations/${location.id}.png`;
+  const locationImageUrl = `/assets/${mysteryId}/assets/locations/${location.id}.png?v=${ASSET_VERSION}`;
 
   const handleClueClick = (clue) => {
     if (!discoveredClues.includes(clue.id)) {
@@ -41,7 +44,7 @@ function SceneView({
         {cluesHere.map((clue) => {
           const isDiscovered = discoveredClues.includes(clue.id);
           const hotspot = clue.hotspot || { x: 50, y: 50, radius: 5 };
-          const clueImageUrl = `/assets/${mysteryId}/assets/clues/${clue.id}.png`;
+          const clueImageUrl = `/assets/${mysteryId}/assets/clues/${clue.id}.png?v=${ASSET_VERSION}`;
 
           return (
             <button
@@ -82,7 +85,7 @@ function SceneView({
               style={{ '--char-index': index }}
             >
               <img
-                src={`/assets/${mysteryId}/assets/characters/${char.id}.png`}
+                src={`/assets/${mysteryId}/assets/characters/${char.id}.png?v=${ASSET_VERSION}`}
                 alt={char.name}
                 className="character-portrait"
                 onError={(e) => {
@@ -113,7 +116,7 @@ function SceneView({
             </button>
             <div className="clue-modal-image">
               <img
-                src={`/assets/${mysteryId}/assets/clues/${selectedClue.id}.png`}
+                src={`/assets/${mysteryId}/assets/clues/${selectedClue.id}.png?v=${ASSET_VERSION}`}
                 alt={selectedClue.name}
                 onError={(e) => {
                   e.target.parentElement.style.display = 'none';

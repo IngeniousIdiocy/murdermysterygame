@@ -135,7 +135,7 @@ function MysterySelect() {
             <div key={mystery.id} className="mystery-card">
               <div className="mystery-thumbnail">
                 <img
-                  src={`/assets/${mystery.id}/assets/thumbnail.png`}
+                  src={`/assets/${mystery.id}/assets/thumbnail.png?v=${Date.now()}`}
                   alt={mystery.title}
                   onError={(e) => {
                     e.target.style.display = 'none';
