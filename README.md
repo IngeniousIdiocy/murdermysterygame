@@ -6,16 +6,16 @@ A content-agnostic game engine for playing murder mystery games with AI-powered 
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│                      GAME ENGINE                            │
+│                      GAME ENGINE                           │
 │  (React + Node.js - knows HOW to play, not WHAT to play)   │
 └────────────────────────────────────────────────────────────┘
                             │
                             │ loads
                             ▼
 ┌────────────────────────────────────────────────────────────┐
-│                     MYSTERY PACKS                           │
+│                     MYSTERY PACKS                          │
 │  (Data folders - each is a complete, self-contained game)  │
-│                                                             │
+│                                                            │
 │  mysteries/                                                │
 │  ├── blackwood-manor/     ← Example mystery included       │
 │  ├── orient-express/      ← Add your own                   │
